@@ -5,7 +5,45 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".MenuPrincipl">
 
-    <TextView android:text="@string/hello_world" android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <TextView android:text="MiGimPersonal" android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:textSize="@android:dimen/app_icon_size"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/titulo"
+        android:textColor="#57bc70"
+        android:textColorHighlight="#750c0c" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ejercicios"
+        android:id="@+id/botonEjercicios"
+        android:layout_below="@+id/titulo"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="69dp"
+        android:layout_alignParentEnd="true"
+        android:onClick="verListaGruposMusculares" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button2"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/botonEjercicios"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_alignEnd="@+id/botonEjercicios" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Button"
+        android:id="@+id/button3"
+        android:layout_below="@+id/button2"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_alignEnd="@+id/button2" />
 
 </RelativeLayout>

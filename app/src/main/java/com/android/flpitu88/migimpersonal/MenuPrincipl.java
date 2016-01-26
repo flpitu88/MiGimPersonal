@@ -1,9 +1,11 @@
 package com.android.flpitu88.migimpersonal;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
 public class MenuPrincipl extends Activity {
@@ -34,5 +36,10 @@ public class MenuPrincipl extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void verListaGruposMusculares(View view){
+        Intent i = new Intent(this, EjerciciosPorParteCuerpo.class);
+        startActivity(i);
     }
 }
