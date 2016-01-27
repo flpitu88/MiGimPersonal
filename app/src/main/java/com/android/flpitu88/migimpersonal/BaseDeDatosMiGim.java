@@ -41,10 +41,58 @@ public class BaseDeDatosMiGim extends SQLiteOpenHelper {
         db.execSQL("create table ejercicios(id integer primary key, nombre text, grupoMuscular text)");
     }
     
+    // OBTENCION DE ULTIMOS ID DISPONIBLE
+    
+    public int getProximoIdEjercicio(){
+        int index = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        if(db!=null){
+            Cursor fila = bd.rawQuery("select max(id) from " + TablaEjercicios, null);
+            if (fila.moveToFirst()){
+                index = Integer.parseInt(fila.getString(0)) + 1;
+            }
+        }
+        db.close();
+        return index;
+    }
+    
+    public int getProximoIdEjercitacion(){
+        int index = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        if(db!=null){
+            Cursor fila = bd.rawQuery("select max(id) from " + TablaEjercitaciones, null);
+            if (fila.moveToFirst()){
+                index = Integer.parseInt(fila.getString(0)) + 1;
+            }
+        }
+        db.close();
+        return index;
+    }
+    
+    public int getProximoIdGrupoMuscular(){
+        int index = 0;
+        SQLiteDatabase db = getReadableDatabase();
+        if(db!=null){
+            Cursor fila = bd.rawQuery("select max(id) from " + TablaGruposMusculares, null);
+            if (fila.moveToFirst()){
+                index = Integer.parseInt(fila.getString(0)) + 1;
+            }
+        }
+        db.close();
+        return index;
+    }
+    
     // ABM DE GRUPOS MUSCULARES
     
+    public Cursor leerGruposMusculares(){
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery("SELECT id, nombre FROM "+TablaGruposMusculares, null);
+    }
+    
     // ABM DE EJERCICIOS
-    public void agregarEjercicio(int id, String nombre, int parteCuerpo, String imagen){
+    
+    public void agregarEjercicio(String nombre, int parteCuerpo, String imagen){
+        int id = getProximoIdEjercicio();
         SQLiteDatabase db = getWritableDatabase();
         if(db!=null){
             db.execSQL("INSERT INTO " + TablaEjercicios + 
@@ -69,7 +117,26 @@ public class BaseDeDatosMiGim extends SQLiteOpenHelper {
     }
     
     // ABM DE EJERCITACIONES
+    
+    public void agregarEjercitacion(int ejercicio, int serie, int repeticion, int peso, 
+            String estado, String observaciones){
+                int id = getProximoIdEjercitacion();
+        SQLiteDatabase db = getWritableDatabase();
+        if(db!=null){
+            db.execSQL("INSERT INTO " + TablaEjercitaciones + 
+                " (id, ejercicio, series, repeticion, peso, estado, observaciones) " +
+                " VALUES(" + id + ", '" + nombre + "', '" + parteCuerpo + "', '" + imagen + "' ) ");
+            db.close();   
+        }
+    }
+    
+    public Cursor leerEjercitaciones(){
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery("SELECT id, ejercicio, series, repeticion, peso, estado, observaciones FROM "+TablaEjercitaciones, null);
+    }
+    
     // http://www.nosinmiubuntu.com/como-guardar-datos-en-android-bases-de/
     // http://www.nosinmiubuntu.com/rellenar-un-listview-con-sqlite/
-    
+    // PARA OBTENER UNA IMAGEN DESDE CAMARA O GALERIA PARA EL EJERCICIO
+    // http://www.maestrosdelweb.com/curso-android-trabajando-con-imagenes/
 }
