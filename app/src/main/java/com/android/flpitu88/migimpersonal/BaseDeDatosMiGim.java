@@ -1,17 +1,18 @@
 package com.android.flpitu88.migimpersonal;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * Created by flpitu88 on 26/01/16.
  */
-public class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
+public class BaseDeDatosMiGim extends SQLiteOpenHelper {
 
     private static String name = "miGim";
     private static int version = 1;
-    private static CursorFactory cursorFactory = null;
+    private static SQLiteDatabase.CursorFactory cursorFactory = null;
     
     // Tablas
     protected static String TablaEjercicios = "ejercicios";
@@ -23,7 +24,7 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
     private String SQLCreateEjercitaciones = "CREATE TABLE " + TablaEjercitaciones +  " (id INT, ejercicio INT, series INT, repeticion INT, peso INT, estado VARCHAR(45), fecha DATE, observaciones VARCHAR(200) )";
     private String SQLCreateGruposMusc = "CREATE TABLE " + TablaGruposMusculares + " (id INT, nombre VARCHAR(25) )";
 
-    public AdminSQLiteOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public BaseDeDatosMiGim(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, cursorFactory, version);
     }
 
@@ -48,17 +49,16 @@ public class AdminSQLiteOpenHelper extends SQLiteOpenHelper{
         if(db!=null){
             db.execSQL("INSERT INTO " + TablaEjercicios + 
                 " (id, nombre, parteCuerpo, imagen) " +
-                " VALUES(" + id + ", '" + nombre + "', '" + parteCuerpo + "', '" + imagen "' ) ");
+                " VALUES(" + id + ", '" + nombre + "', '" + parteCuerpo + "', '" + imagen + "' ) ");
             db.close();   
         }
     }
-    
+
     public Cursor leerEjercicios(){
         SQLiteDatabase db = getReadableDatabase();
-        return db.rawQuery("SELECT id, nombre, parteCuerpo, imagen "+
-                " FROM "+TablaEjercicios, null);
+        return db.rawQuery("SELECT id, nombre, parteCuerpo, imagen FROM "+TablaEjercicios, null);
     }
-    
+
     public void eliminarEjercicio(int id){
         SQLiteDatabase db = getWritableDatabase();
         if(db!=null){

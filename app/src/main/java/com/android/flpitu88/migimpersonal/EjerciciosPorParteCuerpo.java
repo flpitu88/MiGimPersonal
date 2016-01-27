@@ -18,4 +18,9 @@ public class EjerciciosPorParteCuerpo extends Activity {
         startActivity(i);
     }
 
+    public void ventanaDeNuevoEjercicio(View view){
+        Intent i = new Intent(this, AltaEjercicio.class);
+        startActivity(i);
+    }
+
 }
