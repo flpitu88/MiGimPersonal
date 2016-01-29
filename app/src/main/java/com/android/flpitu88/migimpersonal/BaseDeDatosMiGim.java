@@ -24,6 +24,10 @@ public class BaseDeDatosMiGim extends SQLiteOpenHelper {
     private String SQLCreateEjercitaciones = "CREATE TABLE " + TablaEjercitaciones +  " (id INT, ejercicio INT, series INT, repeticion INT, peso INT, estado VARCHAR(45), fecha DATE, observaciones VARCHAR(200) )";
     private String SQLCreateGruposMusc = "CREATE TABLE " + TablaGruposMusculares + " (id INT, nombre VARCHAR(25) )";
 
+    public BaseDeDatosMiGim(Context context){
+        super(context,"miGim",null,1);
+    }
+
     public BaseDeDatosMiGim(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, cursorFactory, version);
     }
@@ -47,7 +51,7 @@ public class BaseDeDatosMiGim extends SQLiteOpenHelper {
         int index = 0;
         SQLiteDatabase db = getReadableDatabase();
         if(db!=null){
-            Cursor fila = bd.rawQuery("select max(id) from " + TablaEjercicios, null);
+            Cursor fila = db.rawQuery("select max(id) from " + TablaEjercicios, null);
             if (fila.moveToFirst()){
                 index = Integer.parseInt(fila.getString(0)) + 1;
             }
@@ -60,7 +64,7 @@ public class BaseDeDatosMiGim extends SQLiteOpenHelper {
         int index = 0;
         SQLiteDatabase db = getReadableDatabase();
         if(db!=null){
-            Cursor fila = bd.rawQuery("select max(id) from " + TablaEjercitaciones, null);
+            Cursor fila = db.rawQuery("select max(id) from " + TablaEjercitaciones, null);
             if (fila.moveToFirst()){
                 index = Integer.parseInt(fila.getString(0)) + 1;
             }
@@ -73,7 +77,7 @@ public class BaseDeDatosMiGim extends SQLiteOpenHelper {
         int index = 0;
         SQLiteDatabase db = getReadableDatabase();
         if(db!=null){
-            Cursor fila = bd.rawQuery("select max(id) from " + TablaGruposMusculares, null);
+            Cursor fila = db.rawQuery("select max(id) from " + TablaGruposMusculares, null);
             if (fila.moveToFirst()){
                 index = Integer.parseInt(fila.getString(0)) + 1;
             }
@@ -115,6 +119,11 @@ public class BaseDeDatosMiGim extends SQLiteOpenHelper {
         db.close();
         }
     }
+
+    public Cursor getEjerciciosPorParteCuerpo(int grupo){
+        SQLiteDatabase db = getReadableDatabase();
+        return db.rawQuery("SELECT id, nombre, imagen FROM "+TablaEjercicios + " WHERE parteCuerpo= " + grupo, null);
+    }
     
     // ABM DE EJERCITACIONES
     
@@ -125,7 +134,8 @@ public class BaseDeDatosMiGim extends SQLiteOpenHelper {
         if(db!=null){
             db.execSQL("INSERT INTO " + TablaEjercitaciones + 
                 " (id, ejercicio, series, repeticion, peso, estado, observaciones) " +
-                " VALUES(" + id + ", '" + nombre + "', '" + parteCuerpo + "', '" + imagen + "' ) ");
+                    " VALUES(" + id + ", '" + ejercicio + "', '" + serie + "', '"  + repeticion
+                    + "', '"  + peso + "', '"  + estado + "', '" + observaciones + "' ) ");
             db.close();   
         }
     }

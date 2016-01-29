@@ -20,7 +20,7 @@ public class AltaEjercicio extends Activity {
         EditText nombreET = (EditText) findViewById(R.id.nombreEjText);
         EditText numeroET = (EditText) findViewById(R.id.nuevoEjNumero);
         BaseDeDatosMiGim bd = new BaseDeDatosMiGim(this,"miGim",null,1);
-        bd.agregarEjercicio(nro_id,nombreET.getText().toString(),
+        bd.agregarEjercicio(nombreET.getText().toString(),
                 Integer.parseInt(numeroET.getText().toString()),"imagen");
         nombreET.setText("");
         numeroET.setText("");
