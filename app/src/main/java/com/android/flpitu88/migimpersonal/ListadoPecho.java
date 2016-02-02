@@ -1,31 +1,52 @@
 package com.android.flpitu88.migimpersonal;
 
-import android.app.Activity;
 import android.app.ListActivity;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Menu;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 
-public class ListadoPecho extends Activity {
+import com.android.flpitu88.persistencia.EjercicioCursorAdapter;
+import com.android.flpitu88.persistencia.TablaEjerciciosAdapter;
 
-    ListView listView = (ListView) findViewById(R.id.listView);
+import java.sql.SQLException;
 
-    BaseDeDatosMiGim bbdd = new BaseDeDatosMiGim(this,"miGim",null,1);
+public class ListadoPecho extends ListActivity {
 
-    Cursor cursor = bbdd.getEjerciciosPorParteCuerpo(1);
-    startManagingCursor(cursor);
-
-    String[] from = new String[]{"id","nombre","parteCuerpo","imagen"};
-    int[] to = new int[]{R.id.text};
-
-    SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(this, R.layout.row, cursor, from, to);
-
-    listView.setAdapter(cursorAdapter);
+    private TablaEjerciciosAdapter dbAdapter;
+    private Cursor cursor;
+    private EjercicioCursorAdapter ejercicioAdapter;
+    private ListView lista;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado_pecho);
+
+        lista = (ListView) findViewById(android.R.id.list);
+
+        dbAdapter = new TablaEjerciciosAdapter(this);
+        try {
+            dbAdapter.abrir();
+            consultar();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
     }
+
+    private void consultar() throws SQLException {
+        cursor = dbAdapter.getCursor();
+        startManagingCursor(cursor);
+        ejercicioAdapter = new EjercicioCursorAdapter(this, cursor);
+        lista.setAdapter(ejercicioAdapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_menu_principl, menu);
+        return true;
+    }
+
 }

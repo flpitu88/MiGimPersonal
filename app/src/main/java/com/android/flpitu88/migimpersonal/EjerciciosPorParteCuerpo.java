@@ -23,4 +23,9 @@ public class EjerciciosPorParteCuerpo extends Activity {
         startActivity(i);
     }
 
+    public void ventanaEjerciciosPecho(View view){
+        Intent i = new Intent(this, ListadoPecho.class);
+        startActivity(i);
+    }
+
 }
