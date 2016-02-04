@@ -1,8 +1,11 @@
 package com.android.flpitu88.persistencia;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import java.sql.SQLException;
 
 /**
  * Created by flpitu88 on 01/02/16.
@@ -17,7 +20,7 @@ public class EjerciciosDBHelper extends SQLiteOpenHelper {
     protected static String TablaEjercicios = "ejercicios";
 
     // Sentencias para crear tablas
-    private String SQLCreateEjercicios = "CREATE TABLE " + TablaEjercicios +  " (id INT, nombre VARCHAR(45), parteCuerpo INT, imagen VARCHAR(250) ) ";
+    private String SQLCreateEjercicios = "CREATE TABLE " + TablaEjercicios +  " (_id INTEGER PRIMARY KEY AUTOINCREMENT, nombre VARCHAR(45), parteCuerpo INT, imagen VARCHAR(250) ) ";
 
     public EjerciciosDBHelper(Context context){
         super(context, name, factory, version);
@@ -33,4 +36,5 @@ public class EjerciciosDBHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists ejercicios");
         db.execSQL(SQLCreateEjercicios);
     }
+
 }

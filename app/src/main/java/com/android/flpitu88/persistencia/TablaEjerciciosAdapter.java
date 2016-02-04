@@ -19,7 +19,7 @@ public class TablaEjerciciosAdapter {
     /**
      * Definimos constantes con el nombre de las columnas de la tabla
      */
-    public static final String C_COLUMNA_ID = "id";
+    public static final String C_COLUMNA_ID = "_id";
     public static final String C_COLUMNA_NOMBRE = "nombre";
     public static final String C_COLUMNA_PARTECUERPO = "parteCuerpo";
     public static final String C_COLUMNA_IMAGEN = "imagen";
