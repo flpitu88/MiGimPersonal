@@ -12,29 +12,39 @@ import java.sql.SQLException;
  */
 public class EjerciciosDBHelper extends SQLiteOpenHelper {
 
-    private static int version = 1;
-    private static String name = "ejerciciosDB" ;
-    private static SQLiteDatabase.CursorFactory factory = null;
+    // Información de la tabla
+    public static final String TABLA_EJERCICIOS = "ejercicios";
+    public static final String EJERCICIOS_ID = "_id";
+    public static final String EJERCICIOS_NOMBRE = "nombre";
+    public static final String EJERCICIOS_PARTECUERPO = "parteCuerpo";
+    public static final String EJERCICIOS_IMAGEN = "imagen";
 
-    // Tablas
-    protected static String TablaEjercicios = "ejercicios";
+    // información del a base de datos
+    static final String DB_NAME = "miGim";
+    static final int DB_VERSION = 1;
 
-    // Sentencias para crear tablas
-    private String SQLCreateEjercicios = "CREATE TABLE " + TablaEjercicios +  " (_id INTEGER PRIMARY KEY AUTOINCREMENT, nombre VARCHAR(45), parteCuerpo INT, imagen VARCHAR(250) ) ";
+    // Información de la base de datos
+    private static final String CREATE_TABLE = "create table "
+            + TABLA_EJERCICIOS + "(" + EJERCICIOS_ID
+            + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+            + EJERCICIOS_NOMBRE + " VARCHAR(45), "
+            + EJERCICIOS_PARTECUERPO + " INT, "
+            + EJERCICIOS_IMAGEN + " VARCHAR(250));";
 
-    public EjerciciosDBHelper(Context context){
-        super(context, name, factory, version);
+    public EjerciciosDBHelper(Context context) {
+        super(context, DB_NAME, null,DB_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL(SQLCreateEjercicios);
+        db.execSQL(CREATE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("drop table if exists ejercicios");
-        db.execSQL(SQLCreateEjercicios);
+        // TODO Auto-generated method stub
+        db.execSQL("DROP TABLE IF EXISTS " + TABLA_EJERCICIOS);
+        onCreate(db);
     }
 
 }
